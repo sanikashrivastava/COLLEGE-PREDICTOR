@@ -1,0 +1,172 @@
+{% extends "private_template.html" %}
+
+{% block title %}College Predictor 2025{% endblock %}
+
+{% block scripts_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block main %}
+
+
+
+<div class='signup-container'>
+  <div class='left-container'>
+
+    <h1>
+      <a href="/" style="color:black">
+        <i class='fas fa-graduation-cap' alt="Graduation Cap"></i>
+        <br><br>
+        <b>
+          College Predictor 2025
+        </b>
+      </a>
+    </h1>
+    
+  </div>
+
+  <div class='right-container container-fluid h-auto '>
+    {% block headerTitle %}
+
+    <h1>Find your expected college and branch based on JEE Mains 2024.</h1>
+    {% endblock headerTitle %}
+    <header>
+      {% with messages= get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category,message in messages %}
+      <div class="alert alert-danger" role="alert">
+        <h3>{{message}}</h3>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+
+      <form action="/" method="POST" id="predictionForm">
+        <div class='set'>
+          <div class='percentile'>
+            <label for='percentile'>Percentile</label>
+            <input id='percentile' class="form-control" placeholder="Percentile (in %)" type="number" min="0" max="100" step="any" name="percentile">
+          </div>
+          <div class='rank'>
+            <label for='rank'>Rank</label>
+            <input id='rank' placeholder="If you have received it" type='number' min="1" max="10000000" name="rank">
+          </div>
+        </div>
+        <div class='set'>
+          <div class='state'>
+            <label for='state'>Home State</label>
+            <select id='state' name="state" required>
+              <option value="" disabled selected>Select your state</option>
+              <option value="All India">All India</option>
+              <option value="Andaman and Nicobar Islands">Andaman & Nicobar Islands</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+              <option value="Assam">Assam</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Chandigarh">Chandigarh</option>
+              <option value="Chhattisgarh">Chhattisgarh</option>
+              <option value="Dadra and Nagar Havelli">Dadra & Nagar Havelli</option>
+              <option value="Daman and Diu">Daman & Diu</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Goa">Goa</option>
+              <option value="Gujarat">Gujarat</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Himachal Pradesh">Himachal Pradesh</option>
+              <option value="Jammu and Kashmir">Jammu & Kashmir</option>
+              <option value="Jharkhand">Jharkhand</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Kerela">Kerela</option>
+              <option value="Lakshwadeep">Lakshwadeep</option>
+              <option value="Madhya Pradesh">Madhya Pradesh</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Manipur">Manipur</option>
+              <option value="Megahalaya">Megahalaya</option>
+              <option value="Mizoram">Mizoram</option>
+              <option value="Nagaland">Nagaland</option>
+              <option value="Orissa">Orissa</option>
+              <option value="Pondicherry">Pondicherry</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Sikkim">Sikkim</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Tripura">Tripura</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Uttarakhand">Uttarakhand</option>
+              <option value="West Bengal">West Bengal</option>
+            </select>
+          </div>
+        </div>
+        <div class='set'>
+          <div class='pwd'>
+            <label for='pwd-yes'>PwD</label>
+            <div class='radio-container'>
+              <input id='pwd-yes' name='pwd' type='radio' value='YES'>
+              <label for='pwd-yes'>Yes</label>
+              <input checked id='pwd-no' name='pwd' type='radio' value='NO'>
+              <label for='pwd-no'>No</label>
+            </div>
+          </div>
+          <div class='gender'>
+            <label for='gender-female'>Gender</label>
+            <div class='radio-container'>
+              <input id='gender-female' name='gender' type='radio' value='Female'>
+              <label for='gender-female'>Female</label>
+              <input checked id='gender-male' name='gender' type='radio' value='Male'>
+              <label for='gender-male'>Male</label>
+            </div>
+          </div>
+        </div>
+        <div class='set'>
+          <div class='sortby'>
+            <label for='sortby-college'>Sort By</label>
+            <div class='radio-container'>
+              <input checked id='sortby-college' name='sortby' type='radio' value='Institute'>
+              <label for='sortby-college'>College</label>
+              <input id='sortby-branch' name='sortby' type='radio' value='Branch Name'>
+              <label for='sortby-branch'>Branch</label>
+            </div>
+
+          </div>
+        </div>
+
+        <div class='category'>
+          <label for='category-0-25'>Category</label>
+          <div class='radio-container'>
+            <input checked id='category-gen' name='category' type='radio' value='GEN'>
+            <label for='category-gen'>General</label>
+            <input id='category-sc' name='category' type='radio' value='SC'>
+            <label for='category-sc'>SC</label>
+            <input id='category-st' name='category' type='radio' value='ST'>
+            <label for='category-st'>ST</label>
+            <input id='category-obc' name='category' type='radio' value='OBC'>
+            <label for='category-obc'>OBC</label>
+            <input id='category-ews' name='category' type='radio' value='EWS'>
+            <label for='category-ews'>EWS</label>
+          </div>
+        </div>
+    </header>
+    <footer>
+      <div class='set' id="myfooter">
+        <button id='next' type='submit'>Next</button>
+      </div>
+    </footer>
+    </form>
+
+  </div>
+
+</div>
+<a class="made_with" href="https://github.com/feyre-2001/CollegePredictor" target="_blank">
+  <footer>
+    <link rel="stylesheet" type="text/css" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    Source Code on <ion-icon name="logo-github"> </ion-icon>
+  </footer>
+
+
+  {% endblock main %}
+
+{% block scripts_js %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock scripts_js %}
