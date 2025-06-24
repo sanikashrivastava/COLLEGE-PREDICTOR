@@ -40,4 +40,4 @@ def index():
 
         return render_template("result.html", ranks=ranks, category=category, tables=[result.to_html(classes='data')], titles=result.columns.values)
 
-    return render_template("index.html")
+    return render_template("../templates/index.html")
