@@ -3,7 +3,7 @@ from flask import Flask
 import os
 
 app = Flask(__name__,
-            template_folder=os.path.join('tp', 'template'),
+            template_folder=os.path.join('templates'),
             static_folder='static',
             static_url_path='/static')
 
