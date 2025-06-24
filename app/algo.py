@@ -7,7 +7,7 @@ from .rvp import pvr
 
 def finalList(rank1,perc,category,state,gender,pwd,sortby):
     try:
-        file_path = Path(__file__).parent.parent / "round1_cleaned.csv"
+        file_path = Path(__file__).parent / "round1_cleaned.csv"
         df = pd.read_csv(file_path)
     except Exception as e:
         print(f"Error reading CSV: {e}")
